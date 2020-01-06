@@ -11,12 +11,14 @@ public class CarEngine : MonoBehaviour {
     public float maxMotorTorque = 80f;
     public float currentSpeed;
     public float maxSpeed = 100f;
+    public Vector3 centerOfMass; 
 
     private List<Transform> nodes;
     private int currentNode = 0;
     
 
         void Start () {
+        GetComponent<Rigidbody>().centerOfMass = centerOfMass;
         Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();
         nodes = new List<Transform>();
 
