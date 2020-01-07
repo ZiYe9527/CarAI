@@ -20,6 +20,11 @@ public class CarEngine : MonoBehaviour {
     public Texture2D textureBraking;
     public Renderer carRenderer;
 
+
+    [Header("Sensors")]
+    public float sensorLength = 5f;
+    public float frontSensorPositon = 0.5f;
+
     private List<Transform> nodes;
     private int currentNode = 0;
     
@@ -40,12 +45,26 @@ public class CarEngine : MonoBehaviour {
 	
     private void FixedUpdate()
     {
+        Sensors();
         ApplySteer();
         Drive();
         CheckWaypointDistance();
         Braking();
     }
 	
+    private void Sensors()
+    {
+        RaycastHit hit;
+        Vector3 sensorStartPos = transform.position;
+        sensorStartPos.z += frontSensorPositon;
+
+        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
+        {
+
+        }
+        Debug.DrawLine(sensorStartPos, hit.point);
+    }
+
     private void ApplySteer()
     {
         Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
